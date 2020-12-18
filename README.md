@@ -15,7 +15,6 @@ Basic example
 import SmoothScroll from '@emotionagency/smoothscroll'
 
 const scroll = new SmoothScroll()
-
 ```
 
 Destroy instance
