@@ -1,2 +1,3 @@
 import { SmoothScroll } from './SmoothScroll/SmoothScroll';
-export default SmoothScroll;
+import { state } from './SmoothScroll/state';
+export { SmoothScroll, state };

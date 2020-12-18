@@ -12,7 +12,7 @@ or
 
 Basic example
 ```
-import SmoothScroll from '@emotionagency/smoothscroll'
+import {SmoothScroll} from '@emotionagency/smoothscroll'
 
 const scroll = new SmoothScroll()
 ```
@@ -20,12 +20,33 @@ const scroll = new SmoothScroll()
 Destroy instance
 
 ```
-import SmoothScroll from '@emotionagency/smoothscroll'
+import {SmoothScroll} from '@emotionagency/smoothscroll'
 
 const scroll = new SmoothScroll()
 
 scroll.destroy()
 ```
+
+You can import scroll values state and use values whatever you want
+
+```
+import {state} from '@emotionagency/smoothscroll'
+
+
+  if (state.scrolling) {
+    document.body.classList.add('is-scrolling')
+  }
+}
+```
+
+## State values
+
+| Value                  | Type      | Description                                                                                                                                                                                                                                                                                        |
+| ----------------------- | --------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scrolling`                    | `boolean`  | Shows whether the scroll is happening now or not.                                                                                                                                                                                                                                                                          |
+| `scrolled`                  | `number`             | How many pixels have been scrolled. Like el.scrollTop.                                                                                                        |
+| `scrollbar`                | `boolean` | Now scrollbar is visible or not.|
+| `target`                | `number`| `true`                |  The value to which the scrolling should aim while creating momentum.
 
 ## Instance options
 
