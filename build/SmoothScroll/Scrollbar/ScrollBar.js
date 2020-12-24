@@ -24,6 +24,7 @@ class Scrollbar {
         this.createScrollbar.append(this.$el);
         this.$scrollbar.addEventListener('mouseenter', this.inactivity.reset);
         utils_1.resize.on(this.setHeight);
+        this.disconnect = utils_1.mutationObserver(this.$el, this.setHeight);
         utils_1.raf.on(this.move);
         this.drag();
     }
@@ -59,7 +60,7 @@ class Scrollbar {
             $thumb: this.$thumb,
             $scrollbar: this.$scrollbar,
             height: this.height,
-            max: this.max
+            max: this.max,
         });
     }
     destroy() {
@@ -67,6 +68,7 @@ class Scrollbar {
         this.$scrollbar.removeEventListener('mouseenter', this.inactivity.reset);
         this.createScrollbar.destroy();
         this.inactivity.destroy();
+        this.disconnect();
     }
 }
 exports.default = Scrollbar;

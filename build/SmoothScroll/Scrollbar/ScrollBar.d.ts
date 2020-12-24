@@ -11,6 +11,7 @@ export default class Scrollbar {
     createScrollbar: TCreateScrollbar;
     inactivity: TInactivity;
     onDrag: TScrollbarDrag;
+    disconnect: () => void;
     constructor($el?: TEl);
     bounds(): void;
     init(): void;
