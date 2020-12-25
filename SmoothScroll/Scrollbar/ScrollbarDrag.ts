@@ -11,6 +11,9 @@ interface IOptions {
   $el: TEl
   $scrollbar: HTMLElement
   $thumb: HTMLElement
+}
+
+interface ISizes {
   height: number
   max: number
 }
@@ -19,7 +22,7 @@ export class ScrollbarDrag {
   events = {
     start: ['mousedown', 'touchstart'],
     move: ['mousemove', 'touchmove'],
-    end: ['mouseup', 'touchend']
+    end: ['mouseup', 'touchend'],
   }
 
   constructor(public options: IOptions) {
@@ -35,12 +38,12 @@ export class ScrollbarDrag {
   init(): void {
     this.events.start.forEach(name => {
       this.options.$scrollbar.addEventListener(name, this.start, {
-        passive: false
+        passive: false,
       })
     })
     this.events.end.forEach(name => {
       this.options.$scrollbar.parentElement.addEventListener(name, this.end, {
-        passive: false
+        passive: false,
       })
     })
 
@@ -50,11 +53,21 @@ export class ScrollbarDrag {
       this.options.$scrollbar.addEventListener('click', this.update)
   }
 
+  get sizes(): ISizes {
+    const height = this.options.$el.scrollHeight
+    const wh = window.innerHeight
+    const max = height - wh
+    return {
+      height,
+      max,
+    }
+  }
+
   compute(o: number): void {
     const h = this.options.$scrollbar.offsetHeight
     state.scrollbar = true
 
-    const target = clamp(this.options.height * (o / h), 0, this.options.max)
+    const target = clamp(this.sizes.height * (o / h), 0, this.sizes.max)
 
     state.target = lerp(state.target, target, 0.1)
     setTimeout(() => (state.scrollbar = false), 0)

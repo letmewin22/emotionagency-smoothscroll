@@ -6,6 +6,8 @@ interface IOptions {
     $el: TEl;
     $scrollbar: HTMLElement;
     $thumb: HTMLElement;
+}
+interface ISizes {
     height: number;
     max: number;
 }
@@ -19,6 +21,7 @@ export declare class ScrollbarDrag {
     constructor(options: IOptions);
     bounds(): void;
     init(): void;
+    get sizes(): ISizes;
     compute(o: number): void;
     update(e: IEvent): void;
     start(): void;

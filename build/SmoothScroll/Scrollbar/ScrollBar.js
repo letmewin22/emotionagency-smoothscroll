@@ -59,8 +59,6 @@ class Scrollbar {
             $el: this.$el,
             $thumb: this.$thumb,
             $scrollbar: this.$scrollbar,
-            height: this.height,
-            max: this.max,
         });
     }
     destroy() {
