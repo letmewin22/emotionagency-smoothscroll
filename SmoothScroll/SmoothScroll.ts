@@ -15,10 +15,13 @@ export class SmoothScroll {
 
   current = 0
   min = 0
+  isRendered: boolean = false
 
   constructor(protected opts?: IOpts) {
     this.opts = getOpts(opts)
-    this.init()
+
+    this.bounds()
+    resize.on(this.resize)
   }
 
   bounds(): void {
@@ -27,21 +30,23 @@ export class SmoothScroll {
   }
 
   init(): void {
-    this.bounds()
+    if (this.isRendered) {
+      state.target = 0
+      this.max = this.maxValue
+      this.scroll()
 
-    resize.on(this.resize)
-
-    state.target = 0
-    this.max = this.maxValue
-    this.scroll()
-
-    raf.on(this.animate)
-    this.scrollbar = this.opts.scrollbar && new ScrollBar()
+      this.scrollbar = this.opts.scrollbar && new ScrollBar()
+    }
   }
 
   resize(): void {
     if (!this.opts.mobile && window.innerWidth <= this.opts.breakpoint) {
+      this.isRendered = false
+      this.init()
       this.destroy()
+    } else {
+      this.isRendered = true
+      this.init()
     }
   }
 

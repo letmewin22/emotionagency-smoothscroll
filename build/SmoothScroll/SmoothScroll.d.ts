@@ -8,6 +8,7 @@ export declare class SmoothScroll {
     scrollbar: typeof ScrollBar.prototype;
     current: number;
     min: number;
+    isRendered: boolean;
     constructor(opts?: IOpts);
     bounds(): void;
     init(): void;

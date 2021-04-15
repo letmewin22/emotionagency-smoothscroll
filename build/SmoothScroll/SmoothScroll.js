@@ -16,25 +16,32 @@ class SmoothScroll {
         this.opts = opts;
         this.current = 0;
         this.min = 0;
+        this.isRendered = false;
         this.opts = opts_1.getOpts(opts);
-        this.init();
+        this.bounds();
+        utils_1.resize.on(this.resize);
     }
     bounds() {
         const methods = ['resize', 'animate'];
         methods.forEach(fn => (this[fn] = this[fn].bind(this)));
     }
     init() {
-        this.bounds();
-        utils_1.resize.on(this.resize);
-        state_1.state.target = 0;
-        this.max = this.maxValue;
-        this.scroll();
-        utils_1.raf.on(this.animate);
-        this.scrollbar = this.opts.scrollbar && new ScrollBar_1.default();
+        if (this.isRendered) {
+            state_1.state.target = 0;
+            this.max = this.maxValue;
+            this.scroll();
+            this.scrollbar = this.opts.scrollbar && new ScrollBar_1.default();
+        }
     }
     resize() {
         if (!this.opts.mobile && window.innerWidth <= this.opts.breakpoint) {
+            this.isRendered = false;
+            this.init();
             this.destroy();
+        }
+        else {
+            this.isRendered = true;
+            this.init();
         }
     }
     get maxValue() {
