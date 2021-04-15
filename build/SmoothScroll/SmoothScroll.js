@@ -83,8 +83,8 @@ class SmoothScroll {
         state_1.state.scrolling = false;
         utils_1.raf.off(this.animate);
         utils_1.resize.off(this.animate);
-        this.vs.destroy();
-        this.scrollbar.destroy();
+        this.vs && this.vs.destroy();
+        this.scrollbar && this.scrollbar.destroy();
     }
 }
 exports.SmoothScroll = SmoothScroll;

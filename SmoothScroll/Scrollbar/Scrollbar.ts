@@ -88,10 +88,11 @@ export default class Scrollbar {
   }
 
   destroy(): void {
-    this.onDrag.destroy()
-    this.$scrollbar.removeEventListener('mouseenter', this.inactivity.reset)
-    this.createScrollbar.destroy()
-    this.inactivity.destroy()
+    this.onDrag && this.onDrag.destroy()
+    this.$scrollbar &&
+      this.$scrollbar.removeEventListener('mouseenter', this.inactivity.reset)
+    this.createScrollbar && this.createScrollbar.destroy()
+    this.inactivity && this.inactivity.destroy()
     this.disconnect()
   }
 }
