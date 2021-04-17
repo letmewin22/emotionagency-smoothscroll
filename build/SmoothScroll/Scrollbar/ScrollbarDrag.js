@@ -74,17 +74,21 @@ class ScrollbarDrag {
         });
     }
     destroy() {
+        var _a, _b;
         this.events.start.forEach(name => {
-            this.options.$scrollbar.removeEventListener(name, this.start);
+            var _a, _b;
+            (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$scrollbar) === null || _b === void 0 ? void 0 : _b.removeEventListener(name, this.start);
         });
         this.events.end.forEach(name => {
-            this.options.$scrollbar.parentElement.removeEventListener(name, this.end);
+            var _a, _b;
+            (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$scrollbar) === null || _b === void 0 ? void 0 : _b.parentElement.removeEventListener(name, this.end);
         });
         this.events.move.forEach(name => {
-            this.options.$el.parentNode.removeEventListener(name, this.update);
+            var _a, _b;
+            (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$el) === null || _b === void 0 ? void 0 : _b.parentNode.removeEventListener(name, this.update);
         });
         document.body.removeEventListener('mouseleave', this.end);
-        this.options.$scrollbar.removeEventListener('click', this.update);
+        (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$scrollbar) === null || _b === void 0 ? void 0 : _b.removeEventListener('click', this.update);
     }
 }
 exports.ScrollbarDrag = ScrollbarDrag;

@@ -101,18 +101,21 @@ export class ScrollbarDrag {
 
   destroy(): void {
     this.events.start.forEach(name => {
-      this.options.$scrollbar.removeEventListener(name, this.start)
+      this.options?.$scrollbar?.removeEventListener(name, this.start)
     })
     this.events.end.forEach(name => {
-      this.options.$scrollbar.parentElement.removeEventListener(name, this.end)
+      this.options?.$scrollbar?.parentElement.removeEventListener(
+        name,
+        this.end
+      )
     })
 
     this.events.move.forEach(name => {
-      this.options.$el.parentNode.removeEventListener(name, this.update)
+      this.options?.$el?.parentNode.removeEventListener(name, this.update)
     })
 
     document.body.removeEventListener('mouseleave', this.end)
-    this.options.$scrollbar.removeEventListener('click', this.update)
+    this.options?.$scrollbar?.removeEventListener('click', this.update)
   }
 }
 

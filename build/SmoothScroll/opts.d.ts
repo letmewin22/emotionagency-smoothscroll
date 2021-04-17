@@ -8,5 +8,6 @@ export interface IOpts {
     stepSize?: number;
     mobile?: boolean;
     breakpoint?: number;
+    passive?: boolean;
 }
 export declare const getOpts: (opts: IOpts | undefined) => IOpts;

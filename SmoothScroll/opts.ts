@@ -8,6 +8,7 @@ export interface IOpts {
   stepSize?: number
   mobile?: boolean
   breakpoint?: number
+  passive?: boolean
 }
 
 export const getOpts = (opts: IOpts | undefined): IOpts => {
@@ -20,6 +21,7 @@ export const getOpts = (opts: IOpts | undefined): IOpts => {
     friction: opts?.friction ?? 0.08,
     stepSize: opts?.stepSize ?? 1,
     mobile: opts?.mobile ?? true,
-    breakpoint: opts?.breakpoint ?? 960
+    breakpoint: opts?.breakpoint ?? 960,
+    passive: opts?.passive ?? true,
   }
 }

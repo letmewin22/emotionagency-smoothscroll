@@ -35,6 +35,7 @@ export class SmoothScroll {
       this.max = this.maxValue
       this.scroll()
 
+      raf.on(this.animate)
       this.scrollbar = this.opts.scrollbar && new ScrollBar()
     }
   }
