@@ -19,19 +19,22 @@ class ScrollbarDrag {
         methods.forEach(fn => (this[fn] = this[fn].bind(this)));
     }
     init() {
+        var _a, _b;
         this.events.start.forEach(name => {
-            this.options.$scrollbar.addEventListener(name, this.start, {
+            var _a, _b;
+            (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$scrollbar) === null || _b === void 0 ? void 0 : _b.addEventListener(name, this.start, {
                 passive: false,
             });
         });
         this.events.end.forEach(name => {
-            this.options.$scrollbar.parentElement.addEventListener(name, this.end, {
+            var _a, _b, _c;
+            (_c = (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$scrollbar) === null || _b === void 0 ? void 0 : _b.parentElement) === null || _c === void 0 ? void 0 : _c.addEventListener(name, this.end, {
                 passive: false,
             });
         });
         document.body.addEventListener('mouseleave', this.end);
         screen.width > 960 &&
-            this.options.$scrollbar.addEventListener('click', this.update);
+            ((_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$scrollbar) === null || _b === void 0 ? void 0 : _b.addEventListener('click', this.update));
     }
     get sizes() {
         const height = this.options.$el.scrollHeight;
@@ -62,15 +65,17 @@ class ScrollbarDrag {
     }
     start() {
         this.events.move.forEach(name => {
+            var _a, _b, _c;
             this.options.$thumb.classList.add('active');
-            this.options.$el.parentNode.addEventListener(name, this.update);
+            (_c = (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$el) === null || _b === void 0 ? void 0 : _b.parentNode) === null || _c === void 0 ? void 0 : _c.addEventListener(name, this.update);
         });
     }
     end() {
         state_1.state.scrollbar = false;
         this.options.$thumb.classList.remove('active');
         this.events.move.forEach(name => {
-            this.options.$el.parentNode.removeEventListener(name, this.update);
+            var _a, _b, _c;
+            (_c = (_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.$el) === null || _b === void 0 ? void 0 : _b.parentNode) === null || _c === void 0 ? void 0 : _c.removeEventListener(name, this.update);
         });
     }
     destroy() {

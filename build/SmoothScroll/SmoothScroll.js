@@ -17,6 +17,7 @@ class SmoothScroll {
         this.current = 0;
         this.min = 0;
         this.isRendered = false;
+        this.isInited = false;
         this.opts = opts_1.getOpts(opts);
         this.bounds();
         utils_1.resize.on(this.resize);
@@ -33,12 +34,13 @@ class SmoothScroll {
             utils_1.raf.on(this.animate);
             this.scrollbar = this.opts.scrollbar && new ScrollBar_1.default();
         }
+        this.isInited = true;
     }
     resize() {
         if (!this.opts.mobile && window.innerWidth <= this.opts.breakpoint) {
             this.isRendered = false;
-            this.init();
-            this.destroy();
+            this.isInited && this.destroy();
+            this.isInited = false;
         }
         else {
             this.isRendered = true;

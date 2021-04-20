@@ -22,6 +22,6 @@ export const getOpts = (opts: IOpts | undefined): IOpts => {
     stepSize: opts?.stepSize ?? 1,
     mobile: opts?.mobile ?? true,
     breakpoint: opts?.breakpoint ?? 960,
-    passive: opts?.passive ?? true,
+    passive: opts?.passive ?? false,
   }
 }

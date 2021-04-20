@@ -9,6 +9,7 @@ export declare class SmoothScroll {
     current: number;
     min: number;
     isRendered: boolean;
+    isInited: boolean;
     constructor(opts?: IOpts);
     bounds(): void;
     init(): void;

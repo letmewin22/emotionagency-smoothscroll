@@ -1,9 +1,10 @@
 import {raf, resize, mutationObserver} from '@emotionagency/utils'
-import {state} from '../state'
 
 import {CreateScrollbar, TCreateScrollbar} from './CreateScrollbar'
 import {Inactivity, TInactivity} from './Inactivity'
 import {ScrollbarDrag, TScrollbarDrag} from './ScrollbarDrag'
+
+import {IState} from '../state'
 
 type TEl = HTMLElement | Element | null
 
@@ -17,7 +18,7 @@ export default class Scrollbar {
   onDrag: TScrollbarDrag
   disconnect: () => void
 
-  constructor(readonly $el?: TEl) {
+  constructor(readonly $el?: TEl, readonly state?: IState) {
     this.$el = $el || document.querySelector('#scroll-container')
     this.bounds()
 
@@ -67,11 +68,15 @@ export default class Scrollbar {
   }
 
   move(): void {
-    if (state.scrolling) {
+    this.state.isFixed
+      ? this.$scrollbar.classList.add('hidden')
+      : this.$scrollbar.classList.remove('hidden')
+
+    if (this.state.scrolling) {
       const ch = document.documentElement.clientHeight
 
       this.$thumb.classList.add('scrolling')
-      const scrollPos = state.scrolled
+      const scrollPos = this.state.scrolled
       const percent = (100 * scrollPos) / (this.height - ch)
 
       this.$thumb.style.top = percent.toFixed(2) + '%'
@@ -80,11 +85,14 @@ export default class Scrollbar {
   }
 
   drag(): void {
-    this.onDrag = new ScrollbarDrag({
-      $el: this.$el,
-      $thumb: this.$thumb,
-      $scrollbar: this.$scrollbar,
-    })
+    this.onDrag = new ScrollbarDrag(
+      {
+        $el: this.$el,
+        $thumb: this.$thumb,
+        $scrollbar: this.$scrollbar,
+      },
+      this.state
+    )
   }
 
   destroy(): void {

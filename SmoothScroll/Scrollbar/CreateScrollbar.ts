@@ -24,8 +24,7 @@ export class CreateScrollbar {
       return
     }
 
-    !$el.parentElement.querySelector('.scrollbar') &&
-      $el.parentElement.appendChild(this.scrollbar)
+    $el.appendChild(this.scrollbar)
   }
 
   destroy(): void {
