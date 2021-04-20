@@ -20,8 +20,7 @@ class CreateScrollbar {
             document.body.appendChild(this.scrollbar);
             return;
         }
-        !$el.parentElement.querySelector('.scrollbar') &&
-            $el.parentElement.appendChild(this.scrollbar);
+        $el.appendChild(this.scrollbar);
     }
     destroy() {
         this.scrollbar.parentElement.removeChild(this.scrollbar);

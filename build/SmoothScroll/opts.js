@@ -13,7 +13,7 @@ const getOpts = (opts) => {
         stepSize: (_g = opts === null || opts === void 0 ? void 0 : opts.stepSize) !== null && _g !== void 0 ? _g : 1,
         mobile: (_h = opts === null || opts === void 0 ? void 0 : opts.mobile) !== null && _h !== void 0 ? _h : true,
         breakpoint: (_j = opts === null || opts === void 0 ? void 0 : opts.breakpoint) !== null && _j !== void 0 ? _j : 960,
-        passive: (_k = opts === null || opts === void 0 ? void 0 : opts.passive) !== null && _k !== void 0 ? _k : true,
+        passive: (_k = opts === null || opts === void 0 ? void 0 : opts.passive) !== null && _k !== void 0 ? _k : false,
     };
 };
 exports.getOpts = getOpts;

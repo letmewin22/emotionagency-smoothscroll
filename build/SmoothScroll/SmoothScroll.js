@@ -10,7 +10,6 @@ const ScrollBar_1 = __importDefault(require("./Scrollbar/ScrollBar"));
 const state_1 = require("./state");
 const utils_2 = require("@emotionagency/utils");
 const opts_1 = require("./opts");
-const isFixed_1 = require("../isFixed");
 class SmoothScroll {
     constructor(opts) {
         this.opts = opts;
@@ -19,6 +18,7 @@ class SmoothScroll {
         this.isRendered = false;
         this.isInited = false;
         this.opts = opts_1.getOpts(opts);
+        this.state = new state_1.State();
         this.bounds();
         utils_1.resize.on(this.resize);
     }
@@ -27,24 +27,21 @@ class SmoothScroll {
         methods.forEach(fn => (this[fn] = this[fn].bind(this)));
     }
     init() {
-        if (this.isRendered) {
-            state_1.state.target = 0;
-            this.max = this.maxValue;
-            this.scroll();
-            utils_1.raf.on(this.animate);
-            this.scrollbar = this.opts.scrollbar && new ScrollBar_1.default();
-        }
+        this.state.target = 0;
+        this.max = this.maxValue;
+        this.scroll();
+        utils_1.raf.on(this.animate);
+        this.scrollbar =
+            this.opts.scrollbar && new ScrollBar_1.default(this.opts.el, this.state);
         this.isInited = true;
     }
     resize() {
         if (!this.opts.mobile && window.innerWidth <= this.opts.breakpoint) {
-            this.isRendered = false;
             this.isInited && this.destroy();
             this.isInited = false;
         }
         else {
-            this.isRendered = true;
-            this.init();
+            !this.isInited && this.init();
         }
     }
     get maxValue() {
@@ -54,43 +51,55 @@ class SmoothScroll {
         this.vs = new virtual_scroll_1.default(Object.assign({}, this.opts));
         this.vs.on((e) => {
             if (this.canScroll) {
-                state_1.state.target -= e.deltaY * this.opts.stepSize;
-                state_1.state.target = utils_2.clamp(state_1.state.target, this.min, this.max);
+                this.state.target -= e.deltaY * this.opts.stepSize;
+                this.state.target = utils_2.clamp(this.state.target, this.min, this.max);
             }
         });
     }
     get canScroll() {
-        return !isFixed_1.isFixed() && this.opts.el.scrollHeight > window.innerHeight;
+        return !this.isFixed && this.opts.el.scrollHeight > window.innerHeight;
     }
-    detectScrolling() {
-        const s = state_1.state.scrollbar;
-        const dif = Math.abs(Math.round(state_1.state.target) - Math.round(this.current));
-        if (dif >= 1 || s) {
-            state_1.state.scrolling = true;
+    get isFixed() {
+        return this.state.isFixed;
+    }
+    set isFixed(val) {
+        this.state.isFixed = val;
+        if (val) {
+            this.opts.el.classList.add('e-fixed');
         }
         else {
-            state_1.state.scrolling = false;
+            this.opts.el.classList.remove('e-fixed');
+        }
+    }
+    detectScrolling() {
+        const s = this.state.scrollbar;
+        const dif = Math.abs(Math.round(this.state.target) - Math.round(this.current));
+        if (dif >= 1 || s) {
+            this.state.scrolling = true;
+        }
+        else {
+            this.state.scrolling = false;
         }
     }
     animate() {
         this.detectScrolling();
-        if (state_1.state.scrolling) {
+        if (this.state.scrolling) {
             this.max = this.maxValue;
-            this.current = utils_2.lerp(this.current, state_1.state.target, this.opts.friction);
+            this.current = utils_2.lerp(this.current, this.state.target, this.opts.friction);
             this.current = Math.round(this.current * 100) / 100;
             this.opts.el.scrollTop = this.current;
-            state_1.state.scrolled = this.current;
+            this.state.scrolled = this.current;
         }
     }
     reset() {
-        state_1.state.target = 0;
+        this.state.target = 0;
         this.current = 0;
         this.opts.el.scrollTop = 0;
     }
     destroy() {
-        state_1.state.target = 0;
-        state_1.state.scrolled = 0;
-        state_1.state.scrolling = false;
+        this.state.target = 0;
+        this.state.scrolled = 0;
+        this.state.scrolling = false;
         utils_1.raf.off(this.animate);
         utils_1.resize.off(this.animate);
         this.vs && this.vs.destroy();

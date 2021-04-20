@@ -1,5 +1,4 @@
 import {clamp, lerp} from '@emotionagency/utils'
-import {mousedown, mousemove, mouseup} from '@emotionagency/touchmouse'
 import {IState} from '../state'
 
 type TEl = HTMLElement | Element | null
@@ -25,18 +24,25 @@ export class ScrollbarDrag {
     this.init()
   }
 
+  events = {
+    start: ['mousedown', 'touchstart'],
+    move: ['mousemove', 'touchmove'],
+    end: ['mouseup', 'touchend'],
+  }
+
   bounds(): void {
     const methods = ['start', 'update', 'end']
     methods.forEach(fn => (this[fn] = this[fn].bind(this)))
   }
 
   init(): void {
-    mousedown.on(this.options.$scrollbar, this.start, {
-      passive: false,
+    this.events.start.forEach(name => {
+      this.options.$scrollbar.addEventListener(name, this.start, {
+        passive: false,
+      })
     })
-
-    mouseup.on(document.documentElement, this.end, {
-      passive: false,
+    this.events.end.forEach(name => {
+      document.documentElement.addEventListener(name, this.end)
     })
 
     screen.width > 960 &&
@@ -79,22 +85,32 @@ export class ScrollbarDrag {
   }
 
   start(): void {
-    console.log(this.options.$el)
-    mousemove.on(document.documentElement as HTMLElement, this.update)
+    this.events.move.forEach(name => {
+      document.documentElement.addEventListener(name, this.update)
+    })
+    this.options.$thumb.classList.add('active')
   }
 
   end(): void {
     this.state.scrollbar = false
     this.options.$thumb.classList.remove('active')
 
-    mousemove.off(document.documentElement as HTMLElement, this.update)
+    this.events.move.forEach(name => {
+      document.documentElement.removeEventListener(name, this.update)
+    })
   }
 
   destroy(): void {
-    mousedown.off(this.options.$scrollbar, this.start)
-    mouseup.off(document.documentElement, this.end)
+    this.events.start.forEach(name => {
+      this.options.$scrollbar.removeEventListener(name, this.start)
+    })
+    this.events.end.forEach(name => {
+      document.documentElement.removeEventListener(name, this.end)
+    })
 
-    mousemove.off(document.documentElement, this.update)
+    this.events.move.forEach(name => {
+      document.documentElement.removeEventListener(name, this.update)
+    })
 
     this.options.$scrollbar.removeEventListener('click', this.update)
   }

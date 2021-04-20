@@ -1,9 +1,11 @@
 import { TCreateScrollbar } from './CreateScrollbar';
 import { TInactivity } from './Inactivity';
 import { TScrollbarDrag } from './ScrollbarDrag';
+import { IState } from '../state';
 declare type TEl = HTMLElement | Element | null;
 export default class Scrollbar {
     readonly $el?: TEl;
+    readonly state?: IState;
     $scrollbar: HTMLElement;
     $thumb: HTMLElement;
     height: number;
@@ -12,7 +14,7 @@ export default class Scrollbar {
     inactivity: TInactivity;
     onDrag: TScrollbarDrag;
     disconnect: () => void;
-    constructor($el?: TEl);
+    constructor($el?: TEl, state?: IState);
     bounds(): void;
     init(): void;
     setHeight(): void;

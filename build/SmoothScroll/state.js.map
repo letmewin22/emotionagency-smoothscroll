@@ -1,1 +1,1 @@
-{"version":3,"file":"state.js","sourceRoot":"","sources":["../../SmoothScroll/state.ts"],"names":[],"mappings":";;;AAOa,QAAA,KAAK,GAAW;IAC3B,SAAS,EAAE,KAAK;IAChB,QAAQ,EAAE,CAAC;IACX,SAAS,EAAE,KAAK;IAChB,MAAM,EAAE,CAAC;CACV,CAAA"}
+{"version":3,"file":"state.js","sourceRoot":"","sources":["../../SmoothScroll/state.ts"],"names":[],"mappings":";;;AAQA,MAAa,KAAK;IAOhB;QACE,IAAI,CAAC,SAAS,GAAG,KAAK,CAAA;QACtB,IAAI,CAAC,QAAQ,GAAG,CAAC,CAAA;QACjB,IAAI,CAAC,SAAS,GAAG,KAAK,CAAA;QACtB,IAAI,CAAC,MAAM,GAAG,CAAC,CAAA;QACf,IAAI,CAAC,OAAO,GAAG,KAAK,CAAA;IACtB,CAAC;CACF;AAdD,sBAcC"}

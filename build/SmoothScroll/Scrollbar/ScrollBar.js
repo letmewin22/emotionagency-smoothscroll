@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("@emotionagency/utils");
-const state_1 = require("../state");
 const CreateScrollbar_1 = require("./CreateScrollbar");
 const Inactivity_1 = require("./Inactivity");
 const ScrollbarDrag_1 = require("./ScrollbarDrag");
 class Scrollbar {
-    constructor($el) {
+    constructor($el, state) {
         this.$el = $el;
+        this.state = state;
         this.$el = $el || document.querySelector('#scroll-container');
         this.bounds();
         this.createScrollbar = new CreateScrollbar_1.CreateScrollbar();
@@ -45,10 +45,13 @@ class Scrollbar {
         this.$thumb.classList.add('scrolling');
     }
     move() {
-        if (state_1.state.scrolling) {
+        this.state.isFixed
+            ? this.$scrollbar.classList.add('hidden')
+            : this.$scrollbar.classList.remove('hidden');
+        if (this.state.scrolling) {
             const ch = document.documentElement.clientHeight;
             this.$thumb.classList.add('scrolling');
-            const scrollPos = state_1.state.scrolled;
+            const scrollPos = this.state.scrolled;
             const percent = (100 * scrollPos) / (this.height - ch);
             this.$thumb.style.top = percent.toFixed(2) + '%';
             this.$thumb.style.transform = `translateY(-${percent.toFixed(2)}%)`;
@@ -59,7 +62,7 @@ class Scrollbar {
             $el: this.$el,
             $thumb: this.$thumb,
             $scrollbar: this.$scrollbar,
-        });
+        }, this.state);
     }
     destroy() {
         this.onDrag && this.onDrag.destroy();

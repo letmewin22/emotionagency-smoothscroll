@@ -1,11 +1,13 @@
 import VirtualScroll from 'virtual-scroll';
 import ScrollBar from './Scrollbar/ScrollBar';
+import { State } from './state';
 import { IOpts } from './opts';
 export declare class SmoothScroll {
     protected opts?: IOpts;
-    max: number;
     vs: typeof VirtualScroll;
     scrollbar: typeof ScrollBar.prototype;
+    state: typeof State.prototype;
+    max: number;
     current: number;
     min: number;
     isRendered: boolean;
@@ -17,6 +19,8 @@ export declare class SmoothScroll {
     get maxValue(): number;
     scroll(): void;
     get canScroll(): boolean;
+    get isFixed(): boolean;
+    set isFixed(val: boolean);
     detectScrolling(): void;
     animate(): void;
     reset(): void;

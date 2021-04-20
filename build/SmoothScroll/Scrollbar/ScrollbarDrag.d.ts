@@ -1,3 +1,4 @@
+import { IState } from '../state';
 declare type TEl = HTMLElement | Element | null;
 interface IEvent {
     [key: string]: any;
@@ -13,12 +14,13 @@ interface ISizes {
 }
 export declare class ScrollbarDrag {
     options: IOptions;
+    readonly state?: IState;
+    constructor(options: IOptions, state?: IState);
     events: {
         start: string[];
         move: string[];
         end: string[];
     };
-    constructor(options: IOptions);
     bounds(): void;
     init(): void;
     get sizes(): ISizes;
