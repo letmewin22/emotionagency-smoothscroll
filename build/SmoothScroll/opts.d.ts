@@ -9,5 +9,6 @@ export interface IOpts {
     mobile?: boolean;
     breakpoint?: number;
     passive?: boolean;
+    useKeyboard?: boolean;
 }
 export declare const getOpts: (opts: IOpts | undefined) => IOpts;
