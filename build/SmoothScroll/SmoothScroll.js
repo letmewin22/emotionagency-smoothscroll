@@ -83,8 +83,8 @@ class SmoothScroll {
     }
     animate() {
         this.detectScrolling();
+        this.max = this.maxValue;
         if (this.state.scrolling) {
-            this.max = this.maxValue;
             this.current = utils_2.lerp(this.current, this.state.target, this.opts.friction);
             this.current = Math.round(this.current * 100) / 100;
             this.opts.el.scrollTop = this.current;
