@@ -5,9 +5,10 @@ const CreateScrollbar_1 = require("./CreateScrollbar");
 const Inactivity_1 = require("./Inactivity");
 const ScrollbarDrag_1 = require("./ScrollbarDrag");
 class Scrollbar {
-    constructor($el, state) {
+    constructor($el, state, raf) {
         this.$el = $el;
         this.state = state;
+        this.raf = raf;
         this.$el = $el || document.querySelector('#scroll-container');
         this.bounds();
         this.createScrollbar = new CreateScrollbar_1.CreateScrollbar();
@@ -25,7 +26,7 @@ class Scrollbar {
         this.$scrollbar.addEventListener('mouseenter', this.inactivity.reset);
         utils_1.resize.on(this.setHeight);
         this.disconnect = utils_1.mutationObserver(this.$el, this.setHeight);
-        utils_1.raf.on(this.move);
+        this.raf.on(this.move);
         this.drag();
     }
     setHeight() {

@@ -13,6 +13,7 @@ export class SmoothScroll {
   state: typeof State.prototype
 
   max: number
+  raf: any
   current = 0
   min = 0
   isRendered = false
@@ -21,7 +22,7 @@ export class SmoothScroll {
   constructor(protected opts?: IOpts) {
     this.opts = getOpts(opts)
     this.state = new State()
-
+    this.raf = opts.raf || raf
     this.bounds()
     resize.on(this.resize)
   }
@@ -36,10 +37,11 @@ export class SmoothScroll {
     this.max = this.maxValue
     this.scroll()
 
-    raf.on(this.animate)
+    this.raf.on(this.animate)
     this.scrollbar =
-      this.opts.scrollbar && new ScrollBar(this.opts.el, this.state)
+      this.opts.scrollbar && new ScrollBar(this.opts.el, this.state, this.raf)
     this.isInited = true
+    this.isFixed = this.opts.isFixed ?? false
   }
 
   resize(): void {
@@ -118,7 +120,7 @@ export class SmoothScroll {
     this.state.target = 0
     this.state.scrolled = 0
     this.state.scrolling = false
-    raf.off(this.animate)
+    this.raf.off(this.animate)
     resize.off(this.animate)
     this.vs && this.vs.destroy()
     this.scrollbar && this.scrollbar.destroy()

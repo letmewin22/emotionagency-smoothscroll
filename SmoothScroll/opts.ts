@@ -10,6 +10,8 @@ export interface IOpts {
   breakpoint?: number
   passive?: boolean
   useKeyboard?: boolean
+  isFixed?: boolean
+  raf?: () => void | null
 }
 
 export const getOpts = (opts: IOpts | undefined): IOpts => {
@@ -25,5 +27,7 @@ export const getOpts = (opts: IOpts | undefined): IOpts => {
     breakpoint: opts?.breakpoint ?? 960,
     passive: opts?.passive ?? false,
     useKeyboard: opts?.useKeyboard ?? true,
+    isFixed: opts?.isFixed ?? false,
+    raf: opts?.raf ?? null,
   }
 }
