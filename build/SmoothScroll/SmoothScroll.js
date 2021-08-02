@@ -19,6 +19,7 @@ class SmoothScroll {
         this.isInited = false;
         this.opts = opts_1.getOpts(opts);
         this.state = new state_1.State();
+        this.raf = this.opts.raf || utils_1.raf;
         this.bounds();
         utils_1.resize.on(this.resize);
     }
@@ -27,13 +28,15 @@ class SmoothScroll {
         methods.forEach(fn => (this[fn] = this[fn].bind(this)));
     }
     init() {
+        var _a;
         this.state.target = 0;
         this.max = this.maxValue;
         this.scroll();
-        utils_1.raf.on(this.animate);
+        this.raf.on(this.animate);
         this.scrollbar =
-            this.opts.scrollbar && new ScrollBar_1.default(this.opts.el, this.state);
+            this.opts.scrollbar && new ScrollBar_1.default(this.opts.el, this.state, this.raf);
         this.isInited = true;
+        this.isFixed = (_a = this.opts.isFixed) !== null && _a !== void 0 ? _a : false;
     }
     resize() {
         if (!this.opts.mobile && window.innerWidth <= this.opts.breakpoint) {
@@ -100,7 +103,7 @@ class SmoothScroll {
         this.state.target = 0;
         this.state.scrolled = 0;
         this.state.scrolling = false;
-        utils_1.raf.off(this.animate);
+        this.raf.off(this.animate);
         utils_1.resize.off(this.animate);
         this.vs && this.vs.destroy();
         this.scrollbar && this.scrollbar.destroy();

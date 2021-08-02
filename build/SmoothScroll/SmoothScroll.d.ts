@@ -8,6 +8,7 @@ export declare class SmoothScroll {
     scrollbar: typeof ScrollBar.prototype;
     state: typeof State.prototype;
     max: number;
+    raf: any;
     current: number;
     min: number;
     isRendered: boolean;

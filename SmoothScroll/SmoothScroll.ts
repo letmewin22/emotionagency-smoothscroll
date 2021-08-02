@@ -22,7 +22,7 @@ export class SmoothScroll {
   constructor(protected opts?: IOpts) {
     this.opts = getOpts(opts)
     this.state = new State()
-    this.raf = opts.raf || raf
+    this.raf = this.opts.raf || raf
     this.bounds()
     resize.on(this.resize)
   }
