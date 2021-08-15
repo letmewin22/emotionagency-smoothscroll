@@ -84,6 +84,12 @@ export default class Scrollbar {
     }
   }
 
+  reset(): void {
+    this.setHeight()
+    this.$thumb.style.top = '0%'
+    this.$thumb.style.transform = `translateY(0%)`
+  }
+
   drag(): void {
     this.onDrag = new ScrollbarDrag(
       {

@@ -21,6 +21,7 @@ export default class Scrollbar {
     setHeight(): void;
     setVisibility(isActive: boolean): void;
     move(): void;
+    reset(): void;
     drag(): void;
     destroy(): void;
 }

@@ -58,6 +58,11 @@ class Scrollbar {
             this.$thumb.style.transform = `translateY(-${percent.toFixed(2)}%)`;
         }
     }
+    reset() {
+        this.setHeight();
+        this.$thumb.style.top = '0%';
+        this.$thumb.style.transform = `translateY(0%)`;
+    }
     drag() {
         this.onDrag = new ScrollbarDrag_1.ScrollbarDrag({
             $el: this.$el,

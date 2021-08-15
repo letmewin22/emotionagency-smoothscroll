@@ -114,6 +114,7 @@ export class SmoothScroll {
     this.state.target = 0
     this.current = 0
     this.opts.el.scrollTop = 0
+    this.scrollbar.reset()
   }
 
   destroy(): void {

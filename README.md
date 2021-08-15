@@ -43,6 +43,20 @@ scroll.destroy()
 | `breakpoint`                | `number`| `960`                |  If mobile is selected false, then this value indicates when the scroll will be disabled.
 
 
+
+
+## Reset scroll position 
+
+(for example, can be called when navigating between pages)
+
+```
+import {SmoothScroll} from '@emotionagency/smoothscroll'
+
+const scroll = new SmoothScroll()
+
+scroll.reset()
+```
+
 ## Recomended styles
 
 ### Scroll Container
