@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("@emotionagency/utils");
 const CreateScrollbar_1 = require("./CreateScrollbar");
 const Inactivity_1 = require("./Inactivity");
 const ScrollbarDrag_1 = require("./ScrollbarDrag");
@@ -24,8 +23,6 @@ class Scrollbar {
         this.$thumb = this.$scrollbar.querySelector('.scrollbar__thumb');
         this.createScrollbar.append(this.$el);
         this.$scrollbar.addEventListener('mouseenter', this.inactivity.reset);
-        utils_1.resize.on(this.setHeight);
-        this.disconnect = utils_1.mutationObserver(this.$el, this.setHeight);
         this.raf.on(this.move);
         this.drag();
     }
@@ -57,17 +54,18 @@ class Scrollbar {
             this.$thumb.style.top = percent.toFixed(2) + '%';
             this.$thumb.style.transform = `translateY(-${percent.toFixed(2)}%)`;
         }
+        this.setHeight();
     }
     reset() {
         this.setHeight();
         this.$thumb.style.top = '0%';
-        this.$thumb.style.transform = `translateY(0%)`;
+        this.$thumb.style.transform = 'translateY(0%)';
     }
     drag() {
         this.onDrag = new ScrollbarDrag_1.ScrollbarDrag({
             $el: this.$el,
             $thumb: this.$thumb,
-            $scrollbar: this.$scrollbar,
+            $scrollbar: this.$scrollbar
         }, this.state);
     }
     destroy() {
@@ -76,7 +74,6 @@ class Scrollbar {
             this.$scrollbar.removeEventListener('mouseenter', this.inactivity.reset);
         this.createScrollbar && this.createScrollbar.destroy();
         this.inactivity && this.inactivity.destroy();
-        this.disconnect();
     }
 }
 exports.default = Scrollbar;

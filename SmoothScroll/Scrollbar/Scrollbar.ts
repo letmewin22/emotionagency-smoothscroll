@@ -1,10 +1,9 @@
-import {resize, mutationObserver} from '@emotionagency/utils'
-
 import {CreateScrollbar, TCreateScrollbar} from './CreateScrollbar'
 import {Inactivity, TInactivity} from './Inactivity'
 import {ScrollbarDrag, TScrollbarDrag} from './ScrollbarDrag'
 
 import {IState} from '../state'
+import {TRAF} from '../opts'
 
 type TEl = HTMLElement | Element | null
 
@@ -18,7 +17,11 @@ export default class Scrollbar {
   onDrag: TScrollbarDrag
   disconnect: () => void
 
-  constructor(readonly $el?: TEl, readonly state?: IState, readonly raf?: any) {
+  constructor(
+    readonly $el?: TEl,
+    readonly state?: IState,
+    readonly raf?: TRAF
+  ) {
     this.$el = $el || document.querySelector('#scroll-container')
     this.bounds()
 
@@ -40,8 +43,6 @@ export default class Scrollbar {
 
     this.$scrollbar.addEventListener('mouseenter', this.inactivity.reset)
 
-    resize.on(this.setHeight)
-    this.disconnect = mutationObserver(this.$el, this.setHeight)
     this.raf.on(this.move)
     this.drag()
   }
@@ -82,12 +83,14 @@ export default class Scrollbar {
       this.$thumb.style.top = percent.toFixed(2) + '%'
       this.$thumb.style.transform = `translateY(-${percent.toFixed(2)}%)`
     }
+
+    this.setHeight()
   }
 
   reset(): void {
     this.setHeight()
     this.$thumb.style.top = '0%'
-    this.$thumb.style.transform = `translateY(0%)`
+    this.$thumb.style.transform = 'translateY(0%)'
   }
 
   drag(): void {
@@ -95,7 +98,7 @@ export default class Scrollbar {
       {
         $el: this.$el,
         $thumb: this.$thumb,
-        $scrollbar: this.$scrollbar,
+        $scrollbar: this.$scrollbar
       },
       this.state
     )
@@ -107,6 +110,5 @@ export default class Scrollbar {
       this.$scrollbar.removeEventListener('mouseenter', this.inactivity.reset)
     this.createScrollbar && this.createScrollbar.destroy()
     this.inactivity && this.inactivity.destroy()
-    this.disconnect()
   }
 }

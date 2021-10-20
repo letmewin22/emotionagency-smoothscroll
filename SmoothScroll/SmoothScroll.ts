@@ -1,10 +1,10 @@
 import VirtualScroll from 'virtual-scroll'
 import {raf, resize} from '@emotionagency/utils'
+import {clamp, lerp} from '@emotionagency/utils'
 
 import ScrollBar from './Scrollbar/ScrollBar'
 import {State} from './state'
 
-import {clamp, lerp} from '@emotionagency/utils'
 import {getOpts, IOpts} from './opts'
 
 export class SmoothScroll {
@@ -38,8 +38,11 @@ export class SmoothScroll {
     this.scroll()
 
     this.raf.on(this.animate)
-    this.scrollbar =
-      this.opts.scrollbar && new ScrollBar(this.opts.el, this.state, this.raf)
+
+    if (this.scrollbar) {
+      this.scrollbar = new ScrollBar(this.opts.el, this.state, this.raf)
+    }
+
     this.isInited = true
     this.isFixed = this.opts.isFixed ?? false
   }
@@ -114,7 +117,7 @@ export class SmoothScroll {
     this.state.target = 0
     this.current = 0
     this.opts.el.scrollTop = 0
-    this.scrollbar.reset()
+    this.scrollbar?.reset()
   }
 
   destroy(): void {

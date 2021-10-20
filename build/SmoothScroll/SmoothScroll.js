@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmoothScroll = void 0;
 const virtual_scroll_1 = __importDefault(require("virtual-scroll"));
 const utils_1 = require("@emotionagency/utils");
+const utils_2 = require("@emotionagency/utils");
 const ScrollBar_1 = __importDefault(require("./Scrollbar/ScrollBar"));
 const state_1 = require("./state");
-const utils_2 = require("@emotionagency/utils");
 const opts_1 = require("./opts");
 class SmoothScroll {
     constructor(opts) {
@@ -33,8 +33,9 @@ class SmoothScroll {
         this.max = this.maxValue;
         this.scroll();
         this.raf.on(this.animate);
-        this.scrollbar =
-            this.opts.scrollbar && new ScrollBar_1.default(this.opts.el, this.state, this.raf);
+        if (this.scrollbar) {
+            this.scrollbar = new ScrollBar_1.default(this.opts.el, this.state, this.raf);
+        }
         this.isInited = true;
         this.isFixed = (_a = this.opts.isFixed) !== null && _a !== void 0 ? _a : false;
     }
@@ -95,10 +96,11 @@ class SmoothScroll {
         }
     }
     reset() {
+        var _a;
         this.state.target = 0;
         this.current = 0;
         this.opts.el.scrollTop = 0;
-        this.scrollbar.reset();
+        (_a = this.scrollbar) === null || _a === void 0 ? void 0 : _a.reset();
     }
     destroy() {
         this.state.target = 0;

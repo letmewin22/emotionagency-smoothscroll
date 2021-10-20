@@ -9,7 +9,7 @@ class ScrollbarDrag {
         this.events = {
             start: ['mousedown', 'touchstart'],
             move: ['mousemove', 'touchmove'],
-            end: ['mouseup', 'touchend'],
+            end: ['mouseup', 'touchend']
         };
         this.bounds();
         this.init();
@@ -21,7 +21,7 @@ class ScrollbarDrag {
     init() {
         this.events.start.forEach(name => {
             this.options.$scrollbar.addEventListener(name, this.start, {
-                passive: false,
+                passive: false
             });
         });
         this.events.end.forEach(name => {
@@ -36,14 +36,14 @@ class ScrollbarDrag {
         const max = height - wh;
         return {
             height,
-            max,
+            max
         };
     }
     compute(o) {
         const h = this.options.$scrollbar.offsetHeight;
         this.state.scrollbar = true;
         const target = utils_1.clamp(this.sizes.height * (o / h), 0, this.sizes.max);
-        this.state.target = utils_1.lerp(this.state.target, target, 0.1);
+        this.state.target = target;
         setTimeout(() => (this.state.scrollbar = false), 0);
     }
     update(e) {

@@ -1,4 +1,4 @@
-import {clamp, lerp} from '@emotionagency/utils'
+import {clamp} from '@emotionagency/utils'
 import {IState} from '../state'
 
 type TEl = HTMLElement | Element | null
@@ -27,7 +27,7 @@ export class ScrollbarDrag {
   events = {
     start: ['mousedown', 'touchstart'],
     move: ['mousemove', 'touchmove'],
-    end: ['mouseup', 'touchend'],
+    end: ['mouseup', 'touchend']
   }
 
   bounds(): void {
@@ -38,7 +38,7 @@ export class ScrollbarDrag {
   init(): void {
     this.events.start.forEach(name => {
       this.options.$scrollbar.addEventListener(name, this.start, {
-        passive: false,
+        passive: false
       })
     })
     this.events.end.forEach(name => {
@@ -55,7 +55,7 @@ export class ScrollbarDrag {
     const max = height - wh
     return {
       height,
-      max,
+      max
     }
   }
 
@@ -65,7 +65,7 @@ export class ScrollbarDrag {
 
     const target = clamp(this.sizes.height * (o / h), 0, this.sizes.max)
 
-    this.state.target = lerp(this.state.target, target, 0.1)
+    this.state.target = target
     setTimeout(() => (this.state.scrollbar = false), 0)
   }
 

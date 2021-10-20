@@ -16,7 +16,7 @@ const getOpts = (opts) => {
         passive: (_k = opts === null || opts === void 0 ? void 0 : opts.passive) !== null && _k !== void 0 ? _k : false,
         useKeyboard: (_l = opts === null || opts === void 0 ? void 0 : opts.useKeyboard) !== null && _l !== void 0 ? _l : true,
         isFixed: (_m = opts === null || opts === void 0 ? void 0 : opts.isFixed) !== null && _m !== void 0 ? _m : false,
-        raf: (_o = opts === null || opts === void 0 ? void 0 : opts.raf) !== null && _o !== void 0 ? _o : null,
+        raf: (_o = opts === null || opts === void 0 ? void 0 : opts.raf) !== null && _o !== void 0 ? _o : null
     };
 };
 exports.getOpts = getOpts;

@@ -1,3 +1,7 @@
+type TFunc = () => void
+
+export type TRAF = {on: (cb: TFunc) => void; off: (cb: TFunc) => void}
+
 export interface IOpts {
   el?: HTMLElement | Element
   touchMultiplier?: number
@@ -11,7 +15,7 @@ export interface IOpts {
   passive?: boolean
   useKeyboard?: boolean
   isFixed?: boolean
-  raf?: () => void | null
+  raf?: TRAF
 }
 
 export const getOpts = (opts: IOpts | undefined): IOpts => {
@@ -28,6 +32,6 @@ export const getOpts = (opts: IOpts | undefined): IOpts => {
     passive: opts?.passive ?? false,
     useKeyboard: opts?.useKeyboard ?? true,
     isFixed: opts?.isFixed ?? false,
-    raf: opts?.raf ?? null,
+    raf: opts?.raf ?? null
   }
 }
