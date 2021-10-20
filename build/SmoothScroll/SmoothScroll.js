@@ -33,7 +33,7 @@ class SmoothScroll {
         this.max = this.maxValue;
         this.scroll();
         this.raf.on(this.animate);
-        if (this.scrollbar) {
+        if (this.opts.scrollbar) {
             this.scrollbar = new ScrollBar_1.default(this.opts.el, this.state, this.raf);
         }
         this.isInited = true;

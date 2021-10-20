@@ -39,7 +39,7 @@ export class SmoothScroll {
 
     this.raf.on(this.animate)
 
-    if (this.scrollbar) {
+    if (this.opts.scrollbar) {
       this.scrollbar = new ScrollBar(this.opts.el, this.state, this.raf)
     }
 
