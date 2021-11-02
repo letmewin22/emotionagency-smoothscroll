@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "compile": "tsc"
+    "compile": "tsc",
+    "pub": "tsc && npm version patch && npm publish"
   },
   "keywords": [
     "js",

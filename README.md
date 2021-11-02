@@ -32,7 +32,7 @@ scroll.destroy()
 
 | Option                  | Type      | Default                | Description                                                                                                                                                                                                                                                                                        |
 | ----------------------- | --------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `el`                    | `object`  | `#scroll-container`             | Scroll container element.                                                                                                                                                                                                                                                                          |
+| `el`                    | `DOM el`  | `#scroll-container`             | Scroll container element.                                                                                                                                                                                                                                                                          |
 | `touchMultiplier`                  | `number`  | `3.8`             | Mutiply the touch action by this modifier to make scroll faster than finger movement (Virtual Scroll API).                                                                                                        |
 | `firefoxMultiplier`                | `number`| `40`                | Firefox on Windows needs a boost, since scrolling is very slow.|
 | `preventTouch`                | `boolean`| `true`                |  If true, automatically call e.preventDefault on touchMove.
@@ -62,27 +62,28 @@ scroll.reset()
 ### Scroll Container
 
 ```
+html {
+  height: 100vh;
+  overflow: hidden;
+}
+
 body {
   height: 100vh;
   overflow: hidden;
 }
 
 .e-fixed {
-  overflow: hidden;
-  overflow-x: auto;
-  .scrollbar:not(.block-scrollbar) {
-    display: none;
-  }
-  #scroll-container {
-    overflow: hidden;
-    overflow-x: auto;
-  }
+  overflow: hidden !important;
 }
 
 #scroll-container {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: var(--vh);
+  height: 100vh;
+  overflow: hidden;
+  will-change: scroll-position;
+  @include media('<=960px') {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 ```
 
@@ -105,7 +106,7 @@ body {
   right: 0;
   top: 0;
   z-index: 10000000 !important;
-  height: var(--vh);
+  height: 100vh;
   width: 12px;
   user-select: none;
   overflow: hidden;
@@ -117,7 +118,7 @@ body {
         width: 10px;
         opacity: 0.7;
         border-radius: 10px;
-        background-color: var(--accent);
+        background-color: #9047ff;
       }
     }
   }
@@ -147,7 +148,7 @@ body {
     width: 10px;
     opacity: 0.7;
     border-radius: 10px;
-    background-color: var(--accent);
+    background-color: #9047ff;
   }
 }
 
