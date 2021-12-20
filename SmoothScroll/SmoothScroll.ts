@@ -8,7 +8,7 @@ import {State} from './state'
 import {getOpts, IOpts} from './opts'
 
 export class SmoothScroll {
-  vs: typeof VirtualScroll
+  vs: typeof VirtualScroll.prototype
   scrollbar: typeof ScrollBar.prototype
   state: typeof State.prototype
 
@@ -121,9 +121,6 @@ export class SmoothScroll {
   }
 
   destroy(): void {
-    this.state.target = 0
-    this.state.scrolled = 0
-    this.state.scrolling = false
     this.raf.off(this.animate)
     resize.off(this.animate)
     this.vs && this.vs.destroy()

@@ -4,7 +4,7 @@ import { State } from './state';
 import { IOpts } from './opts';
 export declare class SmoothScroll {
     protected opts?: IOpts;
-    vs: typeof VirtualScroll;
+    vs: typeof VirtualScroll.prototype;
     scrollbar: typeof ScrollBar.prototype;
     state: typeof State.prototype;
     max: number;
