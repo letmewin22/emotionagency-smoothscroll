@@ -6,6 +6,7 @@ import ScrollBar from './Scrollbar/ScrollBar'
 import {State} from './state'
 
 import {getOpts, IOpts} from './opts'
+import {keyCodes} from './keyCodes'
 
 export class SmoothScroll {
   vs: typeof VirtualScroll.prototype
@@ -28,7 +29,7 @@ export class SmoothScroll {
   }
 
   bounds(): void {
-    const methods = ['resize', 'animate']
+    const methods = ['resize', 'animate', 'onKeyDown']
     methods.forEach(fn => (this[fn] = this[fn].bind(this)))
   }
 
@@ -53,6 +54,7 @@ export class SmoothScroll {
       this.isInited = false
     } else {
       !this.isInited && this.init()
+      this.isFixed = false
     }
   }
 
@@ -61,7 +63,7 @@ export class SmoothScroll {
   }
 
   scroll(): void {
-    this.vs = new VirtualScroll({...this.opts})
+    this.vs = new VirtualScroll({...this.opts, useKeyboard: false})
 
     this.vs.on((e: WheelEvent) => {
       if (this.canScroll) {
@@ -69,6 +71,10 @@ export class SmoothScroll {
         this.state.target = clamp(this.state.target, this.min, this.max)
       }
     })
+
+    if (this.opts.useKeyboard) {
+      window.addEventListener('keydown', this.onKeyDown, false)
+    }
   }
 
   get canScroll(): boolean {
@@ -113,6 +119,37 @@ export class SmoothScroll {
     }
   }
 
+  onKeyDown(e: KeyboardEvent): void {
+    if (this.canScroll) {
+      switch (e.key) {
+        case keyCodes.TAB:
+          this.state.target = document.activeElement.getBoundingClientRect().y
+          break
+        case keyCodes.UP:
+          this.state.target -= 240
+          break
+        case keyCodes.DOWN:
+          this.state.target += 240
+          break
+        case keyCodes.PAGEUP:
+          this.state.target -= window.innerHeight
+          break
+        case keyCodes.PAGEDOWN:
+          this.state.target += window.innerHeight
+          break
+        case keyCodes.HOME:
+          this.state.target = this.min
+          break
+        case keyCodes.END:
+          this.state.target = this.max
+          break
+        default:
+          return
+      }
+    }
+    this.state.target = clamp(this.state.target, this.min, this.max)
+  }
+
   reset(): void {
     this.state.target = 0
     this.current = 0
@@ -125,6 +162,8 @@ export class SmoothScroll {
     resize.off(this.animate)
     this.vs && this.vs.destroy()
     this.scrollbar && this.scrollbar.destroy()
+
+    window.removeEventListener('keydown', this.onKeyDown)
   }
 }
 

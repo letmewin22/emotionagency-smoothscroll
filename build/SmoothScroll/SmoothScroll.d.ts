@@ -24,6 +24,7 @@ export declare class SmoothScroll {
     set isFixed(val: boolean);
     detectScrolling(): void;
     animate(): void;
+    onKeyDown(e: KeyboardEvent): void;
     reset(): void;
     destroy(): void;
 }
