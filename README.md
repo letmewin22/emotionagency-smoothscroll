@@ -41,6 +41,7 @@ scroll.destroy()
 | `stepSize`                | `number`| `1`                |  A coefficient that affects the distance that will be scrolled at one time. The smaller the coefficient, the shorter the distance.
 | `mobile`                | `boolean`| `true`                |  If true, it will work on mobile devices too.
 | `breakpoint`                | `number`| `960`                |  If mobile is selected false, then this value indicates when the scroll will be disabled.
+| `axis`                | `string(X, Y, BOTH)`| `Y`                |  You can choose scroll axis.
 
 
 

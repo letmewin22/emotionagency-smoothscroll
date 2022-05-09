@@ -2,6 +2,12 @@ type TFunc = () => void
 
 export type TRAF = {on: (cb: TFunc) => void; off: (cb: TFunc) => void}
 
+export enum ScrollAxis {
+  x = 'X',
+  y = 'Y',
+  both = 'BOTH',
+}
+
 export interface IOpts {
   el?: HTMLElement | Element
   touchMultiplier?: number
@@ -16,6 +22,8 @@ export interface IOpts {
   useKeyboard?: boolean
   isFixed?: boolean
   raf?: TRAF
+  clampScrollDelta?: number
+  axis?: ScrollAxis
 }
 
 export const getOpts = (opts: IOpts | undefined): IOpts => {
@@ -32,6 +40,8 @@ export const getOpts = (opts: IOpts | undefined): IOpts => {
     passive: opts?.passive ?? false,
     useKeyboard: opts?.useKeyboard ?? true,
     isFixed: opts?.isFixed ?? false,
-    raf: opts?.raf ?? null
+    raf: opts?.raf ?? null,
+    clampScrollDelta: opts?.clampScrollDelta ?? 120,
+    axis: opts?.axis ?? ScrollAxis.y,
   }
 }

@@ -5,7 +5,7 @@ import {clamp, lerp} from '@emotionagency/utils'
 import ScrollBar from './Scrollbar/ScrollBar'
 import {State} from './state'
 
-import {getOpts, IOpts} from './opts'
+import {getOpts, IOpts, ScrollAxis} from './opts'
 import {keyCodes} from './keyCodes'
 
 export class SmoothScroll {
@@ -67,7 +67,26 @@ export class SmoothScroll {
 
     this.vs.on((e: WheelEvent) => {
       if (this.canScroll) {
-        this.state.target -= e.deltaY * this.opts.stepSize
+        let deltaDir = 0
+        if (this.opts.axis === ScrollAxis.y) {
+          deltaDir = e.deltaY
+        }
+
+        if (this.opts.axis === ScrollAxis.x) {
+          deltaDir = e.deltaX
+        }
+
+        if (this.opts.axis === ScrollAxis.both) {
+          deltaDir = e.deltaY || e.deltaX
+        }
+
+        const delta = clamp(
+          deltaDir,
+          -this.opts.clampScrollDelta,
+          this.opts.clampScrollDelta
+        )
+
+        this.state.target -= delta * this.opts.stepSize
         this.state.target = clamp(this.state.target, this.min, this.max)
       }
     })
