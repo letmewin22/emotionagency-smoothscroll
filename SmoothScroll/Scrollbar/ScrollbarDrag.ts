@@ -27,7 +27,7 @@ export class ScrollbarDrag {
   events = {
     start: ['mousedown', 'touchstart'],
     move: ['mousemove', 'touchmove'],
-    end: ['mouseup', 'touchend']
+    end: ['mouseup', 'touchend'],
   }
 
   bounds(): void {
@@ -38,7 +38,7 @@ export class ScrollbarDrag {
   init(): void {
     this.events.start.forEach(name => {
       this.options.$scrollbar.addEventListener(name, this.start, {
-        passive: false
+        passive: false,
       })
     })
     this.events.end.forEach(name => {
@@ -55,7 +55,7 @@ export class ScrollbarDrag {
     const max = height - wh
     return {
       height,
-      max
+      max,
     }
   }
 
@@ -72,14 +72,7 @@ export class ScrollbarDrag {
   update(e: IEvent): void {
     if (!this.state.isFixed) {
       let o: number
-      if ('ontouchstart' in document.documentElement) {
-        const b =
-          e.target?.getBoundingClientRect() ??
-          e.originalEvent?.target.getBoundingClientRect()
-        o = e.pageY - b.top
-      } else {
-        o = e.clientY
-      }
+      o = e.clientY || e.targetTouches[0]?.clientY
       this.compute(o)
     }
   }
