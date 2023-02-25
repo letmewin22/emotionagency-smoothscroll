@@ -19,6 +19,7 @@ export declare class SmoothScroll {
     resize(): void;
     get maxValue(): number;
     scroll(): void;
+    on(cb: (...args: any[]) => any): void;
     get canScroll(): boolean;
     get isFixed(): boolean;
     set isFixed(val: boolean);

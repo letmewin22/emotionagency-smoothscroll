@@ -1,6 +1,6 @@
 import VirtualScroll from 'virtual-scroll'
-import {raf, resize} from '@emotionagency/utils'
-import {clamp, lerp} from '@emotionagency/utils'
+import {raf, resize, clamp, lerp} from '@emotionagency/utils'
+import emitter from 'tiny-emitter/instance.js'
 
 import ScrollBar from './Scrollbar/ScrollBar'
 import {State} from './state'
@@ -96,6 +96,12 @@ export class SmoothScroll {
     }
   }
 
+  on(cb: (...args) => any) {
+    emitter.on('animate', (scrollPosition: number) => {
+      cb(scrollPosition)
+    })
+  }
+
   get canScroll(): boolean {
     return !this.isFixed && this.opts.el.scrollHeight > window.innerHeight
   }
@@ -135,6 +141,8 @@ export class SmoothScroll {
       this.current = Math.round(this.current * 100) / 100
       this.opts.el.scrollTop = this.current
       this.state.scrolled = this.current
+
+      emitter.emit('animate', this.current)
     }
   }
 
