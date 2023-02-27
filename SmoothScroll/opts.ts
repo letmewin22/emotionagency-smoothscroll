@@ -1,3 +1,7 @@
+import {getDocument} from 'ssr-window'
+
+const document = getDocument()
+
 type TFunc = () => void
 
 export type TRAF = {on: (cb: TFunc) => void; off: (cb: TFunc) => void}
@@ -24,6 +28,7 @@ export interface IOpts {
   raf?: TRAF
   clampScrollDelta?: number
   axis?: ScrollAxis
+  saveScrollPosition?: boolean
 }
 
 export const getOpts = (opts: IOpts | undefined): IOpts => {
@@ -43,5 +48,6 @@ export const getOpts = (opts: IOpts | undefined): IOpts => {
     raf: opts?.raf ?? null,
     clampScrollDelta: opts?.clampScrollDelta ?? 120,
     axis: opts?.axis ?? ScrollAxis.y,
+    saveScrollPosition: opts?.saveScrollPosition ?? false,
   }
 }

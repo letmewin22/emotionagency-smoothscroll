@@ -1,9 +1,14 @@
+import {getWindow, getDocument} from 'ssr-window'
+
 import {CreateScrollbar, TCreateScrollbar} from './CreateScrollbar'
 import {Inactivity, TInactivity} from './Inactivity'
 import {ScrollbarDrag, TScrollbarDrag} from './ScrollbarDrag'
 
 import {IState} from '../state'
 import {TRAF} from '../opts'
+
+const window = getWindow()
+const document = getDocument()
 
 type TEl = HTMLElement | Element | null
 
@@ -98,7 +103,7 @@ export default class Scrollbar {
       {
         $el: this.$el,
         $thumb: this.$thumb,
-        $scrollbar: this.$scrollbar
+        $scrollbar: this.$scrollbar,
       },
       this.state
     )

@@ -24,6 +24,7 @@ export interface IOpts {
     raf?: TRAF;
     clampScrollDelta?: number;
     axis?: ScrollAxis;
+    saveScrollPosition?: boolean;
 }
 export declare const getOpts: (opts: IOpts | undefined) => IOpts;
 export {};

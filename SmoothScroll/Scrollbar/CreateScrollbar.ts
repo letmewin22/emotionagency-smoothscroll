@@ -1,3 +1,7 @@
+import {getDocument} from 'ssr-window'
+
+const document = getDocument()
+
 export class CreateScrollbar {
   scrollbar: HTMLElement
 

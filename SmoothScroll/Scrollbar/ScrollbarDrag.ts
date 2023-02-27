@@ -1,4 +1,6 @@
 import {clamp} from '@emotionagency/utils'
+import {getWindow, getDocument} from 'ssr-window'
+
 import {IState} from '../state'
 
 type TEl = HTMLElement | Element | null
@@ -17,6 +19,9 @@ interface ISizes {
   height: number
   max: number
 }
+
+const window = getWindow()
+const document = getDocument()
 
 export class ScrollbarDrag {
   constructor(public options: IOptions, readonly state?: IState) {

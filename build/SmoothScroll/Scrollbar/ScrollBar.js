@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const ssr_window_1 = require("ssr-window");
 const CreateScrollbar_1 = require("./CreateScrollbar");
 const Inactivity_1 = require("./Inactivity");
 const ScrollbarDrag_1 = require("./ScrollbarDrag");
+const window = (0, ssr_window_1.getWindow)();
+const document = (0, ssr_window_1.getDocument)();
 class Scrollbar {
     constructor($el, state, raf) {
         this.$el = $el;
@@ -65,7 +68,7 @@ class Scrollbar {
         this.onDrag = new ScrollbarDrag_1.ScrollbarDrag({
             $el: this.$el,
             $thumb: this.$thumb,
-            $scrollbar: this.$scrollbar
+            $scrollbar: this.$scrollbar,
         }, this.state);
     }
     destroy() {

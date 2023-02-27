@@ -5,12 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmoothScroll = void 0;
 const virtual_scroll_1 = __importDefault(require("virtual-scroll"));
+const ssr_window_1 = require("ssr-window");
 const utils_1 = require("@emotionagency/utils");
 const instance_js_1 = __importDefault(require("tiny-emitter/instance.js"));
 const ScrollBar_1 = __importDefault(require("./Scrollbar/ScrollBar"));
 const state_1 = require("./state");
 const opts_1 = require("./opts");
 const keyCodes_1 = require("./keyCodes");
+const window = (0, ssr_window_1.getWindow)();
+const document = (0, ssr_window_1.getDocument)();
 class SmoothScroll {
     constructor(opts) {
         this.opts = opts;
@@ -21,6 +24,9 @@ class SmoothScroll {
         this.opts = (0, opts_1.getOpts)(opts);
         this.state = new state_1.State();
         this.raf = this.opts.raf || utils_1.raf;
+        this.state.target = opts.saveScrollPosition
+            ? +window.localStorage.getItem('ess') || 0
+            : 0;
         this.bounds();
         utils_1.resize.on(this.resize);
     }
@@ -30,7 +36,6 @@ class SmoothScroll {
     }
     init() {
         var _a;
-        this.state.target = 0;
         this.max = this.maxValue;
         this.scroll();
         this.raf.on(this.animate);
@@ -70,6 +75,9 @@ class SmoothScroll {
                 const delta = (0, utils_1.clamp)(deltaDir, -this.opts.clampScrollDelta, this.opts.clampScrollDelta);
                 this.state.target -= delta * this.opts.stepSize;
                 this.state.target = (0, utils_1.clamp)(this.state.target, this.min, this.max);
+                if (this.opts.saveScrollPosition) {
+                    localStorage.setItem('ess', String(this.state.target));
+                }
             }
         });
         if (this.opts.useKeyboard) {

@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOpts = exports.ScrollAxis = void 0;
+const ssr_window_1 = require("ssr-window");
+const document = (0, ssr_window_1.getDocument)();
 var ScrollAxis;
 (function (ScrollAxis) {
     ScrollAxis["x"] = "X";
@@ -8,7 +10,7 @@ var ScrollAxis;
     ScrollAxis["both"] = "BOTH";
 })(ScrollAxis = exports.ScrollAxis || (exports.ScrollAxis = {}));
 const getOpts = (opts) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
     return {
         el: (_a = opts === null || opts === void 0 ? void 0 : opts.el) !== null && _a !== void 0 ? _a : document.querySelector('#scroll-container'),
         touchMultiplier: (_b = opts === null || opts === void 0 ? void 0 : opts.touchMultiplier) !== null && _b !== void 0 ? _b : 3.8,
@@ -25,6 +27,7 @@ const getOpts = (opts) => {
         raf: (_o = opts === null || opts === void 0 ? void 0 : opts.raf) !== null && _o !== void 0 ? _o : null,
         clampScrollDelta: (_p = opts === null || opts === void 0 ? void 0 : opts.clampScrollDelta) !== null && _p !== void 0 ? _p : 120,
         axis: (_q = opts === null || opts === void 0 ? void 0 : opts.axis) !== null && _q !== void 0 ? _q : ScrollAxis.y,
+        saveScrollPosition: (_r = opts === null || opts === void 0 ? void 0 : opts.saveScrollPosition) !== null && _r !== void 0 ? _r : false,
     };
 };
 exports.getOpts = getOpts;

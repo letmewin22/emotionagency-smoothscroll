@@ -1,4 +1,6 @@
 import VirtualScroll from 'virtual-scroll'
+import {getWindow, getDocument} from 'ssr-window'
+
 import {raf, resize, clamp, lerp} from '@emotionagency/utils'
 import emitter from 'tiny-emitter/instance.js'
 
@@ -7,6 +9,9 @@ import {State} from './state'
 
 import {getOpts, IOpts, ScrollAxis} from './opts'
 import {keyCodes} from './keyCodes'
+
+const window = getWindow()
+const document = getDocument()
 
 export class SmoothScroll {
   vs: typeof VirtualScroll.prototype
@@ -24,6 +29,9 @@ export class SmoothScroll {
     this.opts = getOpts(opts)
     this.state = new State()
     this.raf = this.opts.raf || raf
+    this.state.target = opts.saveScrollPosition
+      ? +window.localStorage.getItem('ess') || 0
+      : 0
     this.bounds()
     resize.on(this.resize)
   }
@@ -34,7 +42,6 @@ export class SmoothScroll {
   }
 
   init(): void {
-    this.state.target = 0
     this.max = this.maxValue
     this.scroll()
 
@@ -88,6 +95,10 @@ export class SmoothScroll {
 
         this.state.target -= delta * this.opts.stepSize
         this.state.target = clamp(this.state.target, this.min, this.max)
+
+        if (this.opts.saveScrollPosition) {
+          localStorage.setItem('ess', String(this.state.target))
+        }
       }
     })
 

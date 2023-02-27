@@ -1,6 +1,6 @@
 {
   "name": "@emotionagency/smoothscroll",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A library that animates the native scroll value using Virtual Scroll and custom scrollbar",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@emotionagency/utils": "^1.1.1",
+    "ssr-window": "^4.0.2",
     "tiny-emitter": "^2.1.0",
     "virtual-scroll": "^2.1.1"
   }

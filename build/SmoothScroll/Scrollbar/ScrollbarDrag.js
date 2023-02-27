@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScrollbarDrag = void 0;
 const utils_1 = require("@emotionagency/utils");
+const ssr_window_1 = require("ssr-window");
+const window = (0, ssr_window_1.getWindow)();
+const document = (0, ssr_window_1.getDocument)();
 class ScrollbarDrag {
     constructor(options, state) {
         this.options = options;
