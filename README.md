@@ -42,7 +42,7 @@ scroll.destroy()
 | `mobile`                | `boolean`| `true`                |  If true, it will work on mobile devices too.
 | `breakpoint`                | `number`| `960`                |  If mobile is selected false, then this value indicates when the scroll will be disabled.
 | `axis`                | `string(X, Y, BOTH)`| `Y`                |  You can choose scroll axis.
-
+| `saveScrollPosition`   | `boolean`          | `false`                |  Saving scroll position after page reload
 
 
 
@@ -56,6 +56,18 @@ import {SmoothScroll} from '@emotionagency/smoothscroll'
 const scroll = new SmoothScroll()
 
 scroll.reset()
+```
+
+## Scrolling hook
+
+```
+import {SmoothScroll} from '@emotionagency/smoothscroll'
+
+const scroll = new SmoothScroll()
+
+scroll.on((pos) => {
+  console.log(pos)
+})
 ```
 
 ## Recomended styles
