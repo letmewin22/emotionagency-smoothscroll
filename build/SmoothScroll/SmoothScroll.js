@@ -52,7 +52,6 @@ class SmoothScroll {
         }
         else {
             !this.isInited && this.init();
-            this.isFixed = false;
         }
     }
     get maxValue() {

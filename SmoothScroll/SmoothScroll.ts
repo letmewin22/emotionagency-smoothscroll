@@ -27,6 +27,7 @@ export class SmoothScroll {
 
   constructor(protected opts?: IOpts) {
     this.opts = getOpts(opts)
+
     this.state = new State()
     this.raf = this.opts.raf || raf
     this.state.target = opts.saveScrollPosition
@@ -61,7 +62,6 @@ export class SmoothScroll {
       this.isInited = false
     } else {
       !this.isInited && this.init()
-      this.isFixed = false
     }
   }
 
